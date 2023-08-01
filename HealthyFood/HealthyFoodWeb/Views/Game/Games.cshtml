@@ -1,0 +1,35 @@
+﻿@using HealthyFoodWeb.Models.Games
+@model PagginatorViewModel<GameViewModel>
+
+<div class="pagginator">
+    @foreach(var pageNumber in Model.PageList)
+    {
+        <a 
+            href="/Game/Games?page=@pageNumber"
+            class=" @(Model.ActivePageNumber == pageNumber ? "active" : "")">@pageNumber</a>
+    }
+</div>
+
+<div>
+    @foreach (var gameViewModel in Model.Items)
+    {
+        <div class="game">
+            <div class="cover">
+                <a href="/Game/Update/@gameViewModel.Id">
+                    <img src="@gameViewModel.CoverUrl" />
+                </a>
+            </div>
+            Name @gameViewModel.Name
+            @foreach (var genre in gameViewModel.Genres)
+            {
+                <span class="genre">@genre</span>
+            }
+        </div>
+    }
+</div>
+
+
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/game.css" />
+}

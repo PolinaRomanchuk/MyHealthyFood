@@ -1,0 +1,150 @@
+.content--banner {
+    display: flex;
+    height: 250px;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(../images/banner/banner.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 102px;
+}
+
+.banner--headline {
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.content--body{
+  display: flex;
+  flex-direction: row;
+}
+
+.content--filter {
+  width: 20%;
+}
+
+.filter--price{
+  height: 210px;
+}
+
+.filter--price::after {
+  content: "";
+  display: block;
+  position: relative;
+  top: 50px;
+  margin: 0 auto;
+  width: 100%;
+  height: 2px;
+  background-color: #dddddd;
+  border-radius: 2px;
+}
+
+.filter--title {
+  margin: 20px 0;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.price--input__text {
+  display: flex;
+  justify-content: space-between;
+}
+
+.input--price__text {
+  width: 112px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  display: flex;
+  align-items: flex-end;
+  color: #343434;
+  height: 35px;
+  margin-bottom: 10px;
+  border: 1px solid #e6e6e6;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding-left: 35px;
+}
+
+.input--price__range {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.filter--names{
+  height: 200px;
+  overflow-y: scroll;
+}
+
+.name--checkbox{
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.content--catalogue{
+  margin-left: 50px;
+}
+
+.sort--name{
+  border: 1px solid #e6e6e6;
+  padding: 15px;
+  font-size: 14px;
+  background-color: transparent;
+  margin-bottom: 40px;
+}
+
+.catalogue--products{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+.catalogue--product{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
+  min-height: 350px;
+  border: 1px solid #e6e6e6;
+  padding: 20px;
+}
+
+.product--image img{
+  width: 100px;
+}
+
+.product--name{
+  font-size: 12px;
+}
+
+.product--price{
+  font-weight: 700;
+}
+
+.product--add-to-cart{
+    background-color:#44c767;
+    border-radius:28px;
+    border:1px solid #18ab29;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:10px;
+    padding:16px 31px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #2f6627;
+}
+
+.product--add-to-cart:hover {
+  background-color:#5cbf2a;
+}
+.product--add-to-cart:active {
+  position:relative;
+  top:1px;
+}

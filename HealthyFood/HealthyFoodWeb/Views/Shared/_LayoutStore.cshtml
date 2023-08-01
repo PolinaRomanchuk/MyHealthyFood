@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Healthy Food</title>
+    <link rel="stylesheet" href="styles/styleStorePageCatalogue.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/store.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    @RenderSection("Script", false)
+
+    @RenderSection("Styles", false)
+</head>
+<body>
+    <div class="header">
+        <div class="header--menu">
+            <div class="container">
+                <div class="header--menu__items">
+                    <div class="header--menu__item">
+                        <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header--bar">
+            <div class="container">
+                <div class="header--bar__items">
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="header--bar__logo"></a>
+                    <div class="header--bar__search">
+                        <input type="text" placeholder="Поиск..." class="header--bar__searchbar" />
+                        <button class="header--bar__search-button"></button>
+                    </div>
+                    <div class="header--bar__user">
+                        <a class="header--bar__login" asp-area="" asp-controller="Store" asp-action="storePageCatalogue"></a>
+                        <a href="/Store/CartPage" class="header--bar__cart"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - HealthyFoodWeb 
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

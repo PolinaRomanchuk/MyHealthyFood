@@ -1,0 +1,22 @@
+﻿@model UserViewModel
+
+<div>
+    <form method="post">
+        <div>
+            Name: @Html.TextBoxFor(x=>x.Name)
+        </div>
+        <div>
+            Password: @Html.TextBoxFor(x=>x.Password)
+        </div>
+        <div>
+            AvatarUrl: 
+            @Html.TextBoxFor(x => x.AvatarUrl)
+            @*<input type="text" name="AvatarUrl" id="AvatarUrl" />*@
+        </div>
+        <div>
+            <input type="submit" value="Add" />
+        </div>
+    </form>
+
+   
+</div>

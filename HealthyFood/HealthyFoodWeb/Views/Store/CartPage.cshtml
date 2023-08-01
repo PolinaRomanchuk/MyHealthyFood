@@ -1,0 +1,99 @@
+﻿@using Data.Interface.Models;
+@using HealthyFoodWeb.Services.IServices;
+@{
+    Layout = "_layoutStore";
+}
+
+@model CartViewModel
+@inject IAuthService authService
+
+<div class="text">
+    Ordering @authService.GetUser().Name
+    @if (authService.GetUser().Name == "admin")
+    {
+        <a href="/Store/AddProductInCart">+</a>
+    }
+</div>
+
+<div class="filter-block">
+    Tags
+    <input type="text" class="user-tag have-to-block" />
+    <button class="get-products-count have-to-block">ok</button>
+    <img class="loader" src="~/images/icons/loader.gif" />
+</div>
+<div>
+    Product count <span class="product-count">0</span>
+</div>
+
+
+<div>
+    @foreach (var cartViewModel in Model.PagginatorViewModel.Items)
+    {
+        <div class="order-list">
+            <div class="image-order">
+                <a href="/Store/UpdateTagInCart/@cartViewModel.Id">
+                    <img src="@cartViewModel.ImgUrl" class="image" />
+                </a>
+            </div>
+            <div class="order-description">
+                <div class="title-of-dishes">
+                    Name of dish: @cartViewModel.Name
+                </div>
+                <div class="details">
+
+                    @foreach (var tag in cartViewModel.Tags)
+                    {
+                        <span class="tag">#@tag</span>
+                    }
+                </div>
+            </div>
+            <div class="order-quantity">
+                <button class="quantity-controller-minus">
+                    <a href="/Store/UpdateQuantityCartDown/@cartViewModel.Id">-</a>
+                </button>
+                <div class="quantity-number">
+                    @cartViewModel.Quantity
+                </div>
+                <button class="quantity-controller-plus">
+                    <a href="/Store/UpdateQuantityCartUp/@cartViewModel.Id">+</a>
+                </button>
+            </div>
+
+            <div class="order-price">
+                @cartViewModel.Price
+            </div>
+        </div>
+    }
+</div>
+
+<div class="form-total-cost">
+    <div class="total-text">
+        Total:
+    </div>
+    <div class="total-price">
+        @Model.TotalPrice
+    </div>
+</div>
+
+<div class="order-button-content">
+    <button class="order-button">
+        To order
+    </button>
+</div>
+
+<div class="pagginator">
+    @foreach (var pageNumber in Model.PagginatorViewModel.PageList)
+    {
+        <a href="/Store/CartPage/CartPage?page=@pageNumber"
+       class=" @(Model.PagginatorViewModel.ActivePageNumber == pageNumber ? "active" : "")">@pageNumber</a>
+    }
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/styleCartPage.css">
+    }
+
+@section Scripts{
+    <script src="~/js/cartpage.js"></script>
+    }
+

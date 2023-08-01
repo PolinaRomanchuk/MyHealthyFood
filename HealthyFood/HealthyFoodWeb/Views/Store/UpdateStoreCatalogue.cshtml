@@ -1,0 +1,28 @@
+﻿@using HealthyFoodWeb.Models.Store
+
+@model StoreItemViewModel
+
+<div>
+    <form method="post">
+        @Html.HiddenFor(x=>x.Id)
+        <div>
+            Name: @Html.TextBoxFor(x => x.Name)
+            @Html.ValidationMessageFor(x=>x.Name)
+        </div>
+        <div>
+            Price: @Html.TextBoxFor(x => x.Price)
+            @Html.ValidationMessageFor(x=>x.Price)
+        </div>
+        <div>
+            ImageUrl: @Html.TextBoxFor(x => x.Img)
+            @Html.ValidationMessageFor(x=>x.Img)
+        </div>
+        <div>
+            Manufacturer:
+            @Html.DropDownListFor(m => m.Manufacturer, Model.AllManufacturers)
+        </div>
+        <div>
+            <input type="submit" value="Update product" />
+        </div>
+    </form>
+</div>

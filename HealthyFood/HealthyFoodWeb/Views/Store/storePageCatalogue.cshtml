@@ -1,0 +1,94 @@
+﻿@using HealthyFoodWeb.Models.Store
+
+@{
+    Layout = "_layoutStore";
+}
+
+@model StoreCatalogueViewModel
+<div class="banner">
+    <div class="content--banner">
+        <div class="container">
+            <div class="banner--headline">
+                <p>Натуральные и вкусные продукты</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="content">
+    <div class="container">
+        <div class="content--body">
+            <form class="content--filter">
+                <div class="filter--price">
+                    <div class="filter--title">Цена</div>
+                    <div class="price--input__text">
+                        <input type="number" class="input--price__text" placeholder="от 1" min="1" max="249" />
+                        <input type="number" class="input--price__text" placeholder="до 250" min="2" max="250" />
+                    </div>
+                    <div class="price--input__range">
+                        <input type="range" class="input--price__range" min="1" max="250" name="price-range" />
+                    </div>
+                </div>
+                <div class="filter--name">
+                    <div class="filter--title">Производитель</div>
+                    <div class="filter--names">
+                        @foreach (var manufacturer in Model.Manufacturer)
+                        {
+                            <div class="name--checkbox">
+                                <input type="checkbox" name="@manufacturer.Name" id="@manufacturer.Name" />
+                                <label for="@manufacturer.Name">@manufacturer.Name</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </form>
+            <div class="content--catalogue">
+                <div class="catalogue--sort">
+                    <button class="sort--name">
+                        Сортировка: по популярности
+                    </button>
+                    <div class="catalogue--products">
+                        @foreach (var item in Model.ItemsPagginator.Items)
+                        {
+                            <div>
+                                <div class="catalogue--product">
+                                    <a>
+                                        <div class="product--image">
+                                            <img src="@item.Img">
+                                        </div>
+                                        <div class="product--name">
+                                            <p>@item.Name (@item.Manufacturer)</p>
+                                        </div>
+                                        <div class="product--price">@item.Price руб.</div>
+                                    </a>
+                                    <a class="product--add-to-cart" href="AddProductInCartFromCatalog/@item.Id">В корзину</a>
+                                    <button class="product--add-to-cart">В избранное</button>
+                                    <a class="product--add-to-cart" href="UpdateStoreCatalogue/@item.Id">Редактировать</a>
+                                </div>
+                            </div>
+                        }
+                        <a href="/Store/AddProductInCatalogue">
+                            <div class="catalogue--product">
+                                +
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+                <div class="pagginator">
+                    @foreach (var pageNumber in Model.ItemsPagginator.PageList)
+                    {
+                        <a href="/Store/StorePageCatalogue?page=@pageNumber"
+                       class=" @(Model.ItemsPagginator.ActivePageNumber == pageNumber ? "active" : "")">@pageNumber</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container"></div>
+    </div>
+
+    @section Styles{
+        <link rel="stylesheet" href="~/css/styleStorePageCatalogue.css" />
+    }

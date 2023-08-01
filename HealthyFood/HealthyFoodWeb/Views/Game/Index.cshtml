@@ -1,0 +1,52 @@
+﻿@model GameIndexViewModel
+
+<div>
+    <a href="/Game/CreateGame">Create game</a>
+</div>
+<div class="filter-block">
+    My budget
+    <input type="number" class="user-budget have-to-block" />
+    <button class="get-games-count have-to-block">ok</button>
+    <img class="loader" src="~/images/icons/loader.gif" />
+</div>
+<div>
+    Games count <span class="game-count">0</span>
+</div>
+<div class="games">
+    <div class="cheap games-set">
+        <h1>Cheap</h1>
+        <div class="games-block">
+            @foreach (var gameViewModel in Model.CheapGames)
+            {
+                <div class="game">
+                    <div class="cover">
+                        <img src="@gameViewModel.CoverUrl" />
+                    </div>
+                    Game Name @gameViewModel.Name <a href="/Game/Remove?name=@gameViewModel.Name">X</a>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="rich games-set">
+        <h1>Rich</h1>
+        <div class="games-block">
+            @foreach (var gameViewModel in Model.RichGames)
+            {
+                <div class="game">
+                    <div class="cover">
+                        <img src="@gameViewModel.CoverUrl" />
+                    </div>
+                    Game Name @gameViewModel.Name <a href="/Game/Remove?name=@gameViewModel.Name">X</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/game.css" />
+}
+
+@section Scripts{
+    <script src="~/js/games/index.js"></script>
+}

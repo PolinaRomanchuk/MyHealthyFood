@@ -1,0 +1,50 @@
+﻿@model CartItemViewModel
+
+<div class="create-product">
+    <div class="data">
+        <form method="post" enctype="multipart/form-data">
+            <div>
+                Name: @Html.TextBoxFor(x => x.Name)
+                @Html.ValidationMessageFor(x=>x.Name)
+            </div>
+            <div>
+                Price: @Html.TextBoxFor(x => x.Price)
+                @Html.ValidationMessageFor(x=>x.Price)
+            </div>
+            <div>
+                Image: <input type="file" name="@(nameof(CartItemViewModel.ImgUrlFile))" />
+            </div>
+
+            <div>
+                <input type="submit" value="Create product" />
+            </div>
+        </form>
+    </div>
+
+    <div class="preview">
+        <div class="order-list">
+            <div class="image-order">
+                <img src="https://www.heavymart.com/youritem.png" />
+            </div>
+            <div class="order-description">
+                <div class="title-of-dishes">
+                    Name of dish: <span class="name"> </span>
+                </div>
+            </div>
+            <div class="order-quantity">
+                <button class="quantity-controller">-</button>
+                <div class="quantity-number">1</div>
+                <button class="quantity-controller">+</button>
+            </div>
+            <div class="order-price">
+                <span class="price">0</span>$
+            </div>
+        </div>
+    </div>
+
+    @section Styles{
+        <link rel="stylesheet" href="~/css/styleCartPage.css">
+    }
+    @section Scripts{
+        <script src="~/js/addproductincart.js"></script>
+    }
