@@ -1,13 +1,13 @@
 ﻿using Data.Interface.Models;
 using Data.Interface.Repositories;
+using Data.Sql.Repositories;
 
 namespace HealthyFoodWeb.Utility
 {
     public static class SeedData
     {
         private const int MIN_GAME_COUNT = 20;
-        private const int MIN_STORE_COUNT = 20;
-        private const int MIN_CART_COUNT = 5;
+        private const int MIN_STORE_COUNT = 5;
         private static Random _random = new Random();
 
         public static void Seed(this WebApplication webApplication)
@@ -30,7 +30,6 @@ namespace HealthyFoodWeb.Utility
             var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
             var cartTagRepository = scope.ServiceProvider.GetRequiredService<ICartTagRepository>();
 
-
             if (!cartRepository.Any())
             {
                 var user = userRepository.GetFirst();
@@ -44,25 +43,6 @@ namespace HealthyFoodWeb.Utility
                     Tags = new List<CartTags> { tags.Random() }
                 };
                 cartRepository.Add(productdefault);
-            }
-
-            if (cartRepository.Count() < MIN_CART_COUNT)
-            {
-                var user = userRepository.GetFirst();
-                var tags = cartTagRepository.GetAll();
-
-                for (int i = 0; i < MIN_CART_COUNT; i++)
-                {
-                    var product = new Cart
-                    {
-                        Name = $"Sup {i}",
-                        Price = 10 + i,
-                        Customer = user,
-                        ImgUrl = "https://korshop.ru/upload/medialibrary/c01/c01f2dae23228a2d4d42eed20544ae2b.jpg",
-                        Tags = new List<CartTags> { tags.Random() }
-                    };
-                    cartRepository.Add(product);
-                }
             }
         }
 
@@ -112,15 +92,19 @@ namespace HealthyFoodWeb.Utility
 
         private static void SeedManufacturer(IServiceScope scope)
         {
+            var defaultManufacturers = new List<string> { "Republic of Belarus", "Russian Federation","Poland", "Germany", "Unknown" };
             var manufacturerRepository = scope.ServiceProvider.GetRequiredService<IManufacturerRepository>();
 
-            if (!manufacturerRepository.Any())
+            foreach (var man in defaultManufacturers)
             {
-                var adminManufacturer = new Manufacturer
+                if (manufacturerRepository.GetByName(man) == null)
                 {
-                    Name = "AdminManufacturer",
-                };
-                manufacturerRepository.Add(adminManufacturer);
+                    var manufactList = new Manufacturer
+                    {
+                        Name = man
+                    };
+                    manufacturerRepository.Add(manufactList);
+                }
             }
         }
 
@@ -129,36 +113,54 @@ namespace HealthyFoodWeb.Utility
             var storeCatalogueRepository = scope.ServiceProvider.GetRequiredService<IStoreCatalogueRepository>();
             var manufacturerRep = scope.ServiceProvider.GetRequiredService<IManufacturerRepository>();
 
-            if (!storeCatalogueRepository.Any())
-            {
-                var manufacturer = manufacturerRep.GetFirst();
-                var adminItem = new StoreItem
-                {
-                    Name = "Admin",
-                    Price = 16,
-                    ImageUrl = "NoImage",
-                    Manufacturer = manufacturer
-
-                };
-                storeCatalogueRepository.Add(adminItem);
-            }
-
             if (storeCatalogueRepository.Count() < MIN_STORE_COUNT)
             {
-                var manufacturer = manufacturerRep.GetFirst();
+                var allmanufact = manufacturerRep.GetAll();
 
-                for (int i = 0; i < MIN_STORE_COUNT; i++)
+                var item1 = new StoreItem
                 {
-                    var adminItem = new StoreItem
-                    {
-                        Name = $"Admin{i}",
-                        Price = 1 + i,
-                        ImageUrl = "NoImage",
-                        Manufacturer = manufacturer
+                    Name = "Apple",
+                    Price = 2,
+                    ImageUrl = "https://5.imimg.com/data5/AK/RA/MY-68428614/apple.jpg",
+                    Manufacturer = allmanufact.Random(),
+                };
+                storeCatalogueRepository.Add(item1);
 
-                    };
-                    storeCatalogueRepository.Add(adminItem);
-                }
+                var item2 = new StoreItem
+                {
+                    Name = "Melon",
+                    Price = 10,
+                    ImageUrl = "https://www.agroponiente.com/wp-content/uploads/2021/09/melon-amarillo-Agroponiente.png",
+                    Manufacturer = allmanufact.Random(),
+                };
+                storeCatalogueRepository.Add(item2);
+
+                var item3 = new StoreItem
+                {
+                    Name = "Watermelon",
+                    Price = 12,
+                    ImageUrl = "https://i5.walmartimages.com/seo/Fresh-Seedless-Watermelon-Each_e2ec527d-fe7b-4309-9373-186de34557cf.1c562d1a69a2a8f4cb7b5de8f125fc76.jpeg",
+                    Manufacturer = allmanufact.Random(),
+                };
+                storeCatalogueRepository.Add(item3);
+
+                var item4 = new StoreItem
+                {
+                    Name = "Pineapple",
+                    Price = 35,
+                    ImageUrl = "https://thumbs.dreamstime.com/b/pineapple-slices-isolated-white-30985039.jpg",
+                    Manufacturer = allmanufact.Random(),
+                };
+                storeCatalogueRepository.Add(item4);
+
+                var item5 = new StoreItem
+                {
+                    Name = "Champignon",
+                    Price = 30,
+                    ImageUrl = "https://chefsmandala.com/wp-content/uploads/2018/03/Mushroom-Champignon-White.jpg",
+                    Manufacturer = allmanufact.Random(),
+                };
+                storeCatalogueRepository.Add(item5);
             }
         }
 

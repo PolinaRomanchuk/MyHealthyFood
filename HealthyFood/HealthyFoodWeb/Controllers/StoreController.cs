@@ -23,7 +23,8 @@ namespace HealthyFoodWeb.Controllers
             _cartService = cartService;
             _storeCatalogueService = storeCatalogueService;
         }
-
+       
+        [Authorize]
         public IActionResult storePageCatalogue(int page = 1, int perPage = 10)
         {
             var viewModel = _storeCatalogueService.CreateStoreViewModel(page, perPage);
@@ -92,6 +93,7 @@ namespace HealthyFoodWeb.Controllers
         }
 
         [HttpGet]
+        [IsHasRole(MyRole.Admin)]
         public IActionResult AddProductInCatalogue()
         {
             var manufacturers = _storeCatalogueService
@@ -110,6 +112,7 @@ namespace HealthyFoodWeb.Controllers
         }
 
         [HttpPost]
+        [IsHasRole(MyRole.Admin)]
         public IActionResult AddProductInCatalogue(StoreItemViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -125,6 +128,33 @@ namespace HealthyFoodWeb.Controllers
                 return View(viewModel);
             }
             _storeCatalogueService.AddStoreItem(viewModel);
+            return RedirectToAction("storePageCatalogue");
+        }
+
+        [HttpGet]
+        [Authorize]
+        [IsHasRole(MyRole.Admin)]
+        public IActionResult UpdateStoreCatalogue(int id)
+        {
+            var viewModel = _storeCatalogueService.GetItemFromCatalogViewMode(id);
+            var manufacturers = _storeCatalogueService
+               .GetAllManufacturers();
+            viewModel.AllManufacturers = manufacturers.Select(x => new SelectListItem
+            {
+                Text = x.Name,
+                Value = x.Name,
+            })
+                .ToList();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [IsHasRole(MyRole.Admin)]
+        public IActionResult UpdateStoreCatalogue(StoreItemViewModel viewModel)
+        {
+            _storeCatalogueService.UpdateItemImgNamePrice(viewModel.Id, viewModel.Name, viewModel.Price, viewModel.Img);
+            _storeCatalogueService.UpdateItemManufacturer(viewModel.Id, viewModel.Manufacturer);
             return RedirectToAction("storePageCatalogue");
         }
     }

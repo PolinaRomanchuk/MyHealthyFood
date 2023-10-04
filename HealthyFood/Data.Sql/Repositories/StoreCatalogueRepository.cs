@@ -28,13 +28,12 @@ namespace Data.Sql.Repositories
             return _dbSet.Include(x => x.Manufacturer).SingleOrDefault(x => x.Id == id);
         }
 
-        public void UpdateItem(int id, string name, decimal price, string img, Manufacturer manufacturer)
+        public void UpdateNamePriceImgItem(int id, string name, decimal price, string img)
         {
-            var item = _dbSet.SingleOrDefault(x => x.Id == id);
+            var item = GetItemWithManufacturer(id);
             item.Name = name;
             item.Price = price;
             item.ImageUrl = img;
-            item.Manufacturer = manufacturer;
             _webContext.SaveChanges();
         }
 

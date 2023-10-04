@@ -1,10 +1,14 @@
 ﻿@using HealthyFoodWeb.Models.Store
+@using HealthyFoodWeb.Services.IServices;
+
 
 @{
     Layout = "_layoutStore";
 }
 
 @model StoreCatalogueViewModel
+@inject IAuthService authService
+
 <div class="banner">
     <div class="content--banner">
         <div class="container">
@@ -62,16 +66,23 @@
                                         <div class="product--price">@item.Price руб.</div>
                                     </a>
                                     <a class="product--add-to-cart" href="AddProductInCartFromCatalog/@item.Id">В корзину</a>
-                                    <button class="product--add-to-cart">В избранное</button>
-                                    <a class="product--add-to-cart" href="UpdateStoreCatalogue/@item.Id">Редактировать</a>
+
+                                    @if (authService.GetUser().Name == "admin")
+                                    {
+                                        <a class="product--add-to-cart" href="UpdateStoreCatalogue/@item.Id">Редактировать</a>
+                                    }
                                 </div>
                             </div>
                         }
+                        @if (authService.GetUser().Name == "admin")
+                                    {
                         <a href="/Store/AddProductInCatalogue">
                             <div class="catalogue--product">
                                 +
                             </div>
+
                         </a>
+                                    }
                     </div>
 
                 </div>

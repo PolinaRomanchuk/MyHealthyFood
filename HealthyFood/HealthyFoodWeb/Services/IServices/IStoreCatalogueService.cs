@@ -9,5 +9,10 @@ namespace HealthyFoodWeb.Services.IServices
         List<Manufacturer> GetAllManufacturers();
         void AddStoreItem(StoreItemViewModel viewModel);
         StoreCatalogueViewModel CreateStoreViewModel(int page, int perPage);
+
+        StoreItemViewModel GetItemFromCatalogViewMode(int id);
+        void UpdateItemManufacturer(int id,  string manufacturer);
+
+        void UpdateItemImgNamePrice(int id, string newname, decimal newprice, string newimg);
     }
 }

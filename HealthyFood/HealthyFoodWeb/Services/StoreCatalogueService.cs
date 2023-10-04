@@ -60,7 +60,6 @@ namespace HealthyFoodWeb.Services
                 }).ToList();
 
             return viewModel;
-
         }
 
         public PagginatorViewModel<StoreItemViewModel> GetStoreItemsForPaginator(int page, int perPage)
@@ -81,11 +80,46 @@ namespace HealthyFoodWeb.Services
             {
                 Id = item.Id,
                 Name = item.Name,
+                Price = item.Price,
                 Img = item.ImageUrl,
                 Manufacturer = item.Manufacturer.Name
             };
         }
 
+        public StoreItemViewModel GetItemFromCatalogViewMode(int id)
+        {
+            var storeDB = _catalogueRepository.GetItemWithManufacturer(id);
+            return new StoreItemViewModel
+            {
+                Id = storeDB.Id,
+                Name = storeDB.Name,
+                Price = storeDB.Price,
+                Img = storeDB.ImageUrl,
+                Manufacturer = storeDB.Manufacturer.Name,
+            };
+        }
+
+        public void UpdateItemImgNamePrice(int id, string newname, decimal newprice, string newimg)
+        {
+            _catalogueRepository.UpdateNamePriceImgItem(id, newname, newprice, newimg);
+        }
+
+        public void UpdateItemManufacturer(int id, string newmanufacturer)
+        {
+            var item = _catalogueRepository.GetItemWithManufacturer(id);
+
+            if (item.Manufacturer == null)
+            {
+                item.Manufacturer = new Manufacturer { Name = newmanufacturer };
+            }
+
+            item.Manufacturer = new Manufacturer { Name = newmanufacturer };
+
+           // item.Manufacturer
+            //  item.Manufacturer.Name.Replace(item.Manufacturer.Name, newmanufacturer);
+
+            _catalogueRepository.Update(item);
+        }
     }
 }
 

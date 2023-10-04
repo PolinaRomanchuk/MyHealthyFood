@@ -15,5 +15,11 @@ namespace Data.Sql.Repositories
         {
             return _dbSet.FirstOrDefault(x => x.Name == name);
         }
+
+        public void UpdateManName (string newname)
+        {
+            
+
+        }
     }
 }
