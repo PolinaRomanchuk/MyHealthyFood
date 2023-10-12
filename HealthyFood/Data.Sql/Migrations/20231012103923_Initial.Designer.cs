@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Sql.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20230406165343_RenameGengres")]
-    partial class RenameGengres
+    [Migration("20231012103923_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,21 @@ namespace Data.Sql.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("CartCartTags", b =>
+                {
+                    b.Property<int>("CartItemsId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartItemsId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("CartCartTags");
+                });
+
             modelBuilder.Entity("Data.Interface.Models.Cart", b =>
                 {
                     b.Property<int>("Id")
@@ -32,6 +47,13 @@ namespace Data.Sql.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImgUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -39,12 +61,17 @@ namespace Data.Sql.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("Data.Interface.Models.Game", b =>
+            modelBuilder.Entity("Data.Interface.Models.CartTags", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,9 +79,46 @@ namespace Data.Sql.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CoverUrl")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CartTags");
+                });
+
+            modelBuilder.Entity("Data.Interface.Models.Manufacturer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Manufacturer");
+                });
+
+            modelBuilder.Entity("Data.Interface.Models.StoreItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ManufacturerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -65,49 +129,9 @@ namespace Data.Sql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Games");
-                });
+                    b.HasIndex("ManufacturerId");
 
-            modelBuilder.Entity("Data.Interface.Models.GameCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GameCategories");
-                });
-
-            modelBuilder.Entity("Data.Interface.Models.SimilarGame", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("LinkForPicture")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SimilarGames");
+                    b.ToTable("StoreItems");
                 });
 
             modelBuilder.Entity("Data.Interface.Models.User", b =>
@@ -126,62 +150,91 @@ namespace Data.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("Data.Interface.Models.WikiMcImage", b =>
+            modelBuilder.Entity("StoreItemUser", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("StoreItemsId")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ImgType")
+                    b.Property<int>("UsersId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImgUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("StoreItemsId", "UsersId");
 
-                    b.Property<int>("Year")
-                        .HasColumnType("int");
+                    b.HasIndex("UsersId");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("WikiMcImages");
+                    b.ToTable("StoreItemUser");
                 });
 
-            modelBuilder.Entity("GameGameCategory", b =>
+            modelBuilder.Entity("CartCartTags", b =>
                 {
-                    b.Property<int>("GamesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GenresId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GamesId", "GenresId");
-
-                    b.HasIndex("GenresId");
-
-                    b.ToTable("GameGameCategory");
-                });
-
-            modelBuilder.Entity("GameGameCategory", b =>
-                {
-                    b.HasOne("Data.Interface.Models.Game", null)
+                    b.HasOne("Data.Interface.Models.Cart", null)
                         .WithMany()
-                        .HasForeignKey("GamesId")
+                        .HasForeignKey("CartItemsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Data.Interface.Models.GameCategory", null)
+                    b.HasOne("Data.Interface.Models.CartTags", null)
                         .WithMany()
-                        .HasForeignKey("GenresId")
+                        .HasForeignKey("TagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Data.Interface.Models.Cart", b =>
+                {
+                    b.HasOne("Data.Interface.Models.User", "Customer")
+                        .WithMany("Products")
+                        .HasForeignKey("CustomerId");
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Data.Interface.Models.StoreItem", b =>
+                {
+                    b.HasOne("Data.Interface.Models.Manufacturer", "Manufacturer")
+                        .WithMany("StoreItems")
+                        .HasForeignKey("ManufacturerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("StoreItemUser", b =>
+                {
+                    b.HasOne("Data.Interface.Models.StoreItem", null)
+                        .WithMany()
+                        .HasForeignKey("StoreItemsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Interface.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Data.Interface.Models.Manufacturer", b =>
+                {
+                    b.Navigation("StoreItems");
+                });
+
+            modelBuilder.Entity("Data.Interface.Models.User", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

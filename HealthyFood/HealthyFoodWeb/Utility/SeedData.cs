@@ -17,10 +17,8 @@ namespace HealthyFoodWeb.Utility
                 SeedUsers(scope);
                 SeedManufacturer(scope);
                 SeedStoreItems(scope);
-                SeedGameCategory(scope);
-                SeedGame(scope);
-                SeedCart(scope);
                 SeedCartTags(scope);
+                SeedCart(scope);
             }
         }
 
@@ -161,53 +159,6 @@ namespace HealthyFoodWeb.Utility
                     Manufacturer = allmanufact.Random(),
                 };
                 storeCatalogueRepository.Add(item5);
-            }
-        }
-
-        private static void SeedGame(IServiceScope scope)
-        {
-            var gameRepository = scope.ServiceProvider.GetRequiredService<IGameRepository>();
-            var genreRepository = scope.ServiceProvider.GetRequiredService<IGameCategoryRepository>();
-
-            if (gameRepository.Count() < MIN_GAME_COUNT)
-            {
-                var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
-                var randomUser = userRepository.GetFirst();
-                var genres = genreRepository.GetAll();
-
-                for (int i = 0; i < MIN_GAME_COUNT; i++)
-                {
-                    var game = new Game
-                    {
-                        Name = $"RichGame№{i}",
-                        Price = 1 + _random.Next(100),
-                        CoverUrl = "https://i.imgur.com/eOtEAB7.jpg",
-                        Creater = randomUser,
-                        Genres = new List<GameCategory> { genres.Random() }
-                    };
-                    gameRepository.Add(game);
-                }
-            }
-
-        }
-
-        private static void SeedGameCategory(IServiceScope scope)
-        {
-            var defaultGenres = new List<string> { "Action", "Fight", "RPG", "Horror" };
-
-            var gameCategoryRepository = scope.ServiceProvider
-                .GetRequiredService<IGameCategoryRepository>();
-
-            foreach (var genreName in defaultGenres)
-            {
-                if (gameCategoryRepository.Get(genreName) == null)
-                {
-                    var gameCatalog = new GameCategory
-                    {
-                        Name = genreName
-                    };
-                    gameCategoryRepository.Add(gameCatalog);
-                }
             }
         }
     }

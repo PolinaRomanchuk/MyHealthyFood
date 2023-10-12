@@ -7,7 +7,7 @@ namespace Data.Sql
     {
         public void RegisterDbContext(IServiceCollection services)
         {
-            var connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=HealthyFood;Trusted_Connection=True;";
+            var connectionString = @"Server=(localdb)\MSSQLLocalDB;Database=MyHealthyFood;Trusted_Connection=True;";
             services.AddDbContext<WebContext>(op => op.UseSqlServer(connectionString));
         }
     }
