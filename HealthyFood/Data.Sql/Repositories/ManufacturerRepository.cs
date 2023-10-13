@@ -1,5 +1,6 @@
 ﻿using Data.Interface.Models;
 using Data.Interface.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace Data.Sql.Repositories
 {
@@ -16,10 +17,10 @@ namespace Data.Sql.Repositories
             return _dbSet.FirstOrDefault(x => x.Name == name);
         }
 
-        public void UpdateManName (string newname)
+        public List<Manufacturer> GetManufacturerWithStoreItems()
         {
-            
-
+            return _dbSet
+               .Include(x => x.StoreItems).ToList();
         }
     }
 }

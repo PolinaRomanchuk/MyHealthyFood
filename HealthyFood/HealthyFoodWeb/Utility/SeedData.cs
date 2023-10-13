@@ -128,7 +128,7 @@ namespace HealthyFoodWeb.Utility
                 {
                     Name = "Melon",
                     Price = 10,
-                    ImageUrl = "https://www.agroponiente.com/wp-content/uploads/2021/09/melon-amarillo-Agroponiente.png",
+                    ImageUrl = "https://images.heb.com/is/image/HEBGrocery/004837553-1?jpegSize=150&hei=1400&fit=constrain&qlt=75",
                     Manufacturer = allmanufact.Random(),
                 };
                 storeCatalogueRepository.Add(item2);

@@ -1,4 +1,5 @@
-﻿@using HealthyFoodWeb.Models.Store
+﻿@using Data.Interface.Models;
+@using HealthyFoodWeb.Models.Store
 @using HealthyFoodWeb.Services.IServices;
 
 
@@ -67,7 +68,7 @@
                                     </a>
                                     <a class="product--add-to-cart" href="AddProductInCartFromCatalog/@item.Id">В корзину</a>
 
-                                    @if (authService.GetUser().Name == "admin")
+                                    @if (authService.GetUser().Role == MyRole.Admin)
                                     {
                                         <a class="product--add-to-cart" href="UpdateStoreCatalogue/@item.Id">Редактировать</a>
                                     }
