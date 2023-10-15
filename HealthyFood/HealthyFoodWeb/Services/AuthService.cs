@@ -30,5 +30,7 @@ namespace HealthyFoodWeb.Services
             var user = _userService.GetById(currentUserId);
             return user;
         }
+
+       
     }
 }

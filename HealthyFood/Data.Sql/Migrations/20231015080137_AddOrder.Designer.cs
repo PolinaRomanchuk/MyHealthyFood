@@ -4,6 +4,7 @@ using Data.Sql;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Sql.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20231015080137_AddOrder")]
+    partial class AddOrder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,9 +59,6 @@ namespace Data.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -68,8 +68,6 @@ namespace Data.Sql.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
-
-                    b.HasIndex("OrderId");
 
                     b.ToTable("Carts");
                 });
@@ -120,6 +118,9 @@ namespace Data.Sql.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -140,6 +141,9 @@ namespace Data.Sql.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId")
+                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -237,13 +241,18 @@ namespace Data.Sql.Migrations
                         .WithMany("Products")
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("Data.Interface.Models.Order", "Order")
-                        .WithMany("Products")
-                        .HasForeignKey("OrderId");
-
                     b.Navigation("Customer");
+                });
 
-                    b.Navigation("Order");
+            modelBuilder.Entity("Data.Interface.Models.Order", b =>
+                {
+                    b.HasOne("Data.Interface.Models.Cart", "Products")
+                        .WithOne("Order")
+                        .HasForeignKey("Data.Interface.Models.Order", "CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Data.Interface.Models.StoreItem", b =>
@@ -272,14 +281,15 @@ namespace Data.Sql.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Data.Interface.Models.Cart", b =>
+                {
+                    b.Navigation("Order")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Data.Interface.Models.Manufacturer", b =>
                 {
                     b.Navigation("StoreItems");
-                });
-
-            modelBuilder.Entity("Data.Interface.Models.Order", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Data.Interface.Models.User", b =>

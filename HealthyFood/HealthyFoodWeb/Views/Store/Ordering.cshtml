@@ -1,0 +1,37 @@
+﻿@model OrderViewModel
+
+<div class="create-product">
+    <div class="data">
+        <form method="post" enctype="multipart/form-data">
+            <div>
+                Имя: @Html.TextBoxFor(x => x.Name)
+                @Html.ValidationMessageFor(x=>x.Name)
+            </div>
+            <div>
+                Мобильный телефон: @Html.TextBoxFor(x => x.PhoneNumber)
+                @Html.ValidationMessageFor(x=>x.PhoneNumber)
+            </div>
+            <div>
+                Адрес: @Html.TextBoxFor(x => x.Address)
+                @Html.ValidationMessageFor(x=>x.Address)
+            </div>
+            <div>
+                Время заказа: @Html.TextBoxFor(x => x.OrderTime)
+                @Html.ValidationMessageFor(x=>x.OrderTime)
+            </div>
+
+            <div>
+                Способ оплаты:@Html.DropDownListFor(o => o.PaymentMethod, Enum.GetValues(typeof(PaymentMethod)).Cast<PaymentMethod>().Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }))
+            </div>
+            <div>
+                Комментарий: @Html.TextBoxFor(x => x.Comment)
+            </div>
+            <div>
+                <input type="submit" value="Заказать" />
+            </div>
+        </form>
+    </div>
+  @*   @section Styles{
+        <link rel="stylesheet" href="~/css/styleCartPage.css">
+    } *@
+    
