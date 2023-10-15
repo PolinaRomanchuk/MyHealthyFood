@@ -112,12 +112,8 @@ namespace HealthyFoodWeb.Services
             {
                 item.Manufacturer = new Manufacturer { Name = newmanufacturer };
             }
-
-            item.Manufacturer = new Manufacturer { Name = newmanufacturer };
-
-           // item.Manufacturer
-            //  item.Manufacturer.Name.Replace(item.Manufacturer.Name, newmanufacturer);
-
+ 
+            item.Manufacturer = _manufacturerRepository.GetManufacturerWithStoreItems().FirstOrDefault(x => x.Name == newmanufacturer);
             _catalogueRepository.Update(item);
         }
     }

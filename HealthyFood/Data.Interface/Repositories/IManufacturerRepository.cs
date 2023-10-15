@@ -6,5 +6,6 @@ namespace Data.Interface.Repositories
     {
         Manufacturer GetFirst();
         Manufacturer GetByName(string name);
+        List<Manufacturer> GetManufacturerWithStoreItems();
     }
 }

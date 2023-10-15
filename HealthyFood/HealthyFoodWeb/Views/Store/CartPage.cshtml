@@ -9,7 +9,7 @@
 
 <div class="text">
     Ordering @authService.GetUser().Name
-    @if (authService.GetUser().Name == "admin")
+    @if (authService.GetUser().Role == MyRole.Admin)
     {
         <a href="/Store/AddProductInCart">+</a>
     }
