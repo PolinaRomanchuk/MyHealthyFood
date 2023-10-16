@@ -1,37 +1,77 @@
 ﻿@model OrderViewModel
 
-<div class="create-product">
+<div class="create-order">
     <div class="data">
+        <h1>Информация о доставке:</h1>
         <form method="post" enctype="multipart/form-data">
-            <div>
-                Имя: @Html.TextBoxFor(x => x.Name)
+            <div class="name-of-user">
+                <div>Имя:</div>
+                @Html.TextBoxFor(x => x.Name)
                 @Html.ValidationMessageFor(x=>x.Name)
             </div>
-            <div>
-                Мобильный телефон: @Html.TextBoxFor(x => x.PhoneNumber)
-                @Html.ValidationMessageFor(x=>x.PhoneNumber)
+            <div class="phone-number">
+                <div> Мобильный телефон:</div>
+                <div class="phone-all">
+                    +375
+                    @Html.TextBoxFor(x => x.PhoneNumber)
+                    @Html.ValidationMessageFor(x=>x.PhoneNumber)
+                </div>
             </div>
-            <div>
-                Адрес: @Html.TextBoxFor(x => x.Address)
-                @Html.ValidationMessageFor(x=>x.Address)
+
+            <div class="address-of-user">
+                <h6>Адрес:</h6>
+                <div class=" important">
+                    <div class="street-of-user">
+                        <div>Улица:</div>
+                        @Html.TextBoxFor(x => x.Street)
+                        @Html.ValidationMessageFor(x=>x.Street)
+                    </div>
+                    <div class="house">
+                        <div>Дом:</div>
+                        @Html.TextBoxFor(x => x.House)
+                        @Html.ValidationMessageFor(x=>x.House)
+                    </div>
+                </div>
+
+                <div class="additional-information">
+                    <div class="doorway">
+                        <div>Подъезд:</div>
+                        @Html.TextBoxFor(x => x.Doorway)
+                        @Html.ValidationMessageFor(x=>x.Doorway)
+                    </div>
+                    <div class="floor">
+                        <div>Этаж:</div>
+                        @Html.TextBoxFor(x => x.Floor)
+                        @Html.ValidationMessageFor(x=>x.Floor)
+                    </div>
+                    <div class=" flat">
+                        <div>Квартира:</div>
+                        @Html.TextBoxFor(x => x.Flat)
+                        @Html.ValidationMessageFor(x=>x.Flat)
+                    </div>
+                </div>
             </div>
-            <div>
-                Время заказа: @Html.TextBoxFor(x => x.OrderTime)
+            <div class="time-of-user">
+                <div>Время заказа:</div>
+                @Html.TextBoxFor(x => x.OrderTime)
                 @Html.ValidationMessageFor(x=>x.OrderTime)
             </div>
 
-            <div>
-                Способ оплаты:@Html.DropDownListFor(o => o.PaymentMethod, Enum.GetValues(typeof(PaymentMethod)).Cast<PaymentMethod>().Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }))
+            <div class="paymentmethod">
+                <div>Способ оплаты:</div>
+                @Html.DropDownListFor(o => o.PaymentMethod, Enum.GetValues(typeof(PaymentMethod)).Cast<PaymentMethod>().Select(x => new SelectListItem { Text = x.ToString(), Value = x.ToString() }))
             </div>
-            <div>
-                Комментарий: @Html.TextBoxFor(x => x.Comment)
+
+            <div class="commetn">
+                <div>Комментарий к заказу: </div>
+                @Html.TextBoxFor(x => x.Comment)
             </div>
             <div>
                 <input type="submit" value="Заказать" />
             </div>
         </form>
     </div>
-  @*   @section Styles{
-        <link rel="stylesheet" href="~/css/styleCartPage.css">
-    } *@
-    
+    @section Styles{
+        <link rel="stylesheet" href="~/css/styleOrder.css">
+    }
+

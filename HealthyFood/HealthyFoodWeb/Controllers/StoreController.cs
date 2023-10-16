@@ -180,5 +180,14 @@ namespace HealthyFoodWeb.Controllers
             _orderService.CreateOrder(viewModel);
             return RedirectToAction("OrderIsDone");
         }
+        public IActionResult OrderIsDone ()
+        {
+            return View();
+        }
+
+        //public IActionResult OrderList()
+        //{
+        //    return View();
+        //}
     }
 }

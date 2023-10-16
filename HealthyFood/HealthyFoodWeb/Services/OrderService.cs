@@ -20,10 +20,13 @@ namespace HealthyFoodWeb.Services
 
         public void CreateOrder(OrderViewModel viewModel)
         {
+            //viewModel.Customer = _authService.GetUser().Name;
+            
+
             var dborder = new Order()
             {
                 Name = viewModel.Name,
-                Address = viewModel.Address,
+                Address = CreateAddress(viewModel),
                 OrderTime = viewModel.OrderTime,
                 Comment = viewModel.Comment,
                 PaymentMethod = viewModel.PaymentMethod,
@@ -31,6 +34,13 @@ namespace HealthyFoodWeb.Services
                 Products = _cartService.GetCustomerProduct(),
             };
             _orderRepository.Add(dborder);
+        }
+
+        public string CreateAddress(OrderViewModel viewModel)
+        {
+            var fullAddress = $"{viewModel.Street}, д. {viewModel.House}, " +
+                $"п. {viewModel.Doorway}, э. {viewModel.Floor}, кв. {viewModel.Flat}";
+            return fullAddress;
         }
     }
 

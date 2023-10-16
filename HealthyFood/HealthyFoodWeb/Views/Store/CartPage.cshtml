@@ -8,14 +8,14 @@
 @inject IAuthService authService
 
 <div class="text">
-    Ordering @authService.GetUser().Name
+    Заказ для @authService.GetUser().Name
     @if (authService.GetUser().Role == MyRole.Admin)
     {
         <a href="/Store/AddProductInCart">+</a>
     }
 </div>
 
-<div class="filter-block">
+@* <div class="filter-block">
     Tags
     <input type="text" class="user-tag have-to-block" />
     <button class="get-products-count have-to-block">ok</button>
@@ -23,7 +23,7 @@
 </div>
 <div>
     Product count <span class="product-count">0</span>
-</div>
+</div> *@
 
 
 <div>
@@ -37,7 +37,7 @@
             </div>
             <div class="order-description">
                 <div class="title-of-dishes">
-                    Name of dish: @cartViewModel.Name
+                    @cartViewModel.Name
                 </div>
                 <div class="details">
 
@@ -68,7 +68,7 @@
 
 <div class="form-total-cost">
     <div class="total-text">
-        Total:
+        Всего:
     </div>
     <div class="total-price">
         @Model.TotalPrice
@@ -77,7 +77,7 @@
 
 <div class="order-button-content">
     <button class="order-button">
-        <a href="/Store/Ordering"> To order</a>
+        <a href="/Store/Ordering"> Продолжить</a>
     </button>
 </div>
 

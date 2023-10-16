@@ -22,6 +22,11 @@ namespace Data.Sql.Repositories
             return _dbSet.First();
         }
 
+        public User GetAdmin()
+        {
+            return _dbSet.FirstOrDefault(x => x.Role == MyRole.Admin);
+        }
+
         public void RemoveByName(string name)
         {
             var user = _dbSet.FirstOrDefault(_x => _x.Name == name);

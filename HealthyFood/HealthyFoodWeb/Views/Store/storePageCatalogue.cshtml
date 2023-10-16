@@ -75,7 +75,7 @@
                                 </div>
                             </div>
                         }
-                        @if (authService.GetUser().Name == "admin")
+                        @if (authService.GetUser().Role == MyRole.Admin)
                                     {
                         <a href="/Store/AddProductInCatalogue">
                             <div class="catalogue--product">
