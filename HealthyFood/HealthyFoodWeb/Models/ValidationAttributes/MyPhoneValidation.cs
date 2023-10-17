@@ -8,7 +8,7 @@ namespace HealthyFoodWeb.Models.ValidationAttributes
         public override string FormatErrorMessage(string? phoneNumber)
         {
             return string.IsNullOrEmpty(ErrorMessage)
-                ? $"Номер введен некорректно. Введите по образцу: 291231234"
+                ? $"Пожалуйста, введите в формате: 291231234"
                 : ErrorMessage;
         }
 
