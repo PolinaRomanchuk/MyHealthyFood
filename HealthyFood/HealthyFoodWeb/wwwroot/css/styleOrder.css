@@ -1,0 +1,25 @@
+﻿
+.address-of-user {
+   margin-top: 40px;
+}
+
+.important {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.additional-information {
+    display: flex;
+    margin-bottom: 40px;
+}
+
+.field-validation-error {
+    color: red;
+    font-size: 10px;
+    display: -webkit-box;
+}
+
+.input-validation-error {
+    border: 1px solid #006699;
+    background-color: silver;
+}

@@ -6,7 +6,6 @@ namespace HealthyFoodWeb.Utility
 {
     public static class SeedData
     {
-        private const int MIN_GAME_COUNT = 20;
         private const int MIN_STORE_COUNT = 5;
         private static Random _random = new Random();
 
@@ -30,11 +29,11 @@ namespace HealthyFoodWeb.Utility
 
             if (!cartRepository.Any())
             {
-                var user = userRepository.GetFirst();
+                var user = userRepository.GetAdmin();
                 var tags = cartTagRepository.GetAll();
                 var productdefault = new Cart
                 {
-                    Name = "Greek salad",
+                    Name = "Греческий салат",
                     Price = 13,
                     Customer = user,
                     ImgUrl = "https://zira.uz/wp-content/uploads/2018/05/grecheskiy-salat-2.jpg",
@@ -46,7 +45,7 @@ namespace HealthyFoodWeb.Utility
 
         private static void SeedCartTags(IServiceScope scope)
         {
-            var defaultTags = new List<string> { "Vegetarian", "Vegan", "Lactose-free", "Low-calorie", "Sugar-free" };
+            var defaultTags = new List<string> { "Веган", "Без лактозы", "Малокалорийное", "Без сахара" };
 
             var cartTagsRepository = scope.ServiceProvider
                 .GetRequiredService<ICartTagRepository>();
@@ -68,14 +67,14 @@ namespace HealthyFoodWeb.Utility
         {
             var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
 
-            var admin = userRepository.GetByName("Admin");
+            var admin = userRepository.GetAdmin();
             if (admin == null)
             {
                 admin = new User
                 {
                     Name = "Admin",
                     Password = "123",
-                    AvatarUrl = "NoAvatar",
+                    AvatarUrl = "https://sun6-23.userapi.com/s/v1/if2/lUGRQtni9P9K8zx4oEBN0Z3lUSZB9D4B29VCvn6dPSkhd81oI9LpPANRNMz3svFoxpUFTH4LDMg8UwCzVUZG-mhi.jpg?size=591x591&quality=96&crop=0,0,591,591&ava=1",
                     Role = MyRole.Admin
                 };
                 userRepository.Add(admin);
@@ -90,7 +89,7 @@ namespace HealthyFoodWeb.Utility
 
         private static void SeedManufacturer(IServiceScope scope)
         {
-            var defaultManufacturers = new List<string> { "Republic of Belarus", "Russian Federation","Poland", "Germany", "Unknown" };
+            var defaultManufacturers = new List<string> { "Республика Беларусь", "Российская Федерация","Польша", "Германия", "Не известно" };
             var manufacturerRepository = scope.ServiceProvider.GetRequiredService<IManufacturerRepository>();
 
             foreach (var man in defaultManufacturers)
@@ -117,7 +116,7 @@ namespace HealthyFoodWeb.Utility
 
                 var item1 = new StoreItem
                 {
-                    Name = "Apple",
+                    Name = "Яблоко",
                     Price = 2,
                     ImageUrl = "https://5.imimg.com/data5/AK/RA/MY-68428614/apple.jpg",
                     Manufacturer = allmanufact.Random(),
@@ -126,7 +125,7 @@ namespace HealthyFoodWeb.Utility
 
                 var item2 = new StoreItem
                 {
-                    Name = "Melon",
+                    Name = "Дыня",
                     Price = 10,
                     ImageUrl = "https://images.heb.com/is/image/HEBGrocery/004837553-1?jpegSize=150&hei=1400&fit=constrain&qlt=75",
                     Manufacturer = allmanufact.Random(),
@@ -135,7 +134,7 @@ namespace HealthyFoodWeb.Utility
 
                 var item3 = new StoreItem
                 {
-                    Name = "Watermelon",
+                    Name = "Арбуз",
                     Price = 12,
                     ImageUrl = "https://i5.walmartimages.com/seo/Fresh-Seedless-Watermelon-Each_e2ec527d-fe7b-4309-9373-186de34557cf.1c562d1a69a2a8f4cb7b5de8f125fc76.jpeg",
                     Manufacturer = allmanufact.Random(),
@@ -144,7 +143,7 @@ namespace HealthyFoodWeb.Utility
 
                 var item4 = new StoreItem
                 {
-                    Name = "Pineapple",
+                    Name = "Ананас",
                     Price = 35,
                     ImageUrl = "https://thumbs.dreamstime.com/b/pineapple-slices-isolated-white-30985039.jpg",
                     Manufacturer = allmanufact.Random(),
@@ -153,7 +152,7 @@ namespace HealthyFoodWeb.Utility
 
                 var item5 = new StoreItem
                 {
-                    Name = "Champignon",
+                    Name = "Шампиньоны",
                     Price = 30,
                     ImageUrl = "https://chefsmandala.com/wp-content/uploads/2018/03/Mushroom-Champignon-White.jpg",
                     Manufacturer = allmanufact.Random(),

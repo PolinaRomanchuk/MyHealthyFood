@@ -1,4 +1,6 @@
-﻿using Data.Interface.Models;
+﻿using Azure;
+using Data.Interface.Models;
+using Data.Interface.Repositories;
 using HealthyFoodWeb.Controllers.CustomAuthorizeAttributes;
 using HealthyFoodWeb.Models;
 using HealthyFoodWeb.Models.Store;
@@ -6,6 +8,7 @@ using HealthyFoodWeb.Services.IServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace HealthyFoodWeb.Controllers
 {
@@ -15,13 +18,15 @@ namespace HealthyFoodWeb.Controllers
         private IUserService _userService;
         private IAuthService _authService;
         private IStoreCatalogueService _storeCatalogueService;
+        private IOrderService _orderService;
 
-        public StoreController(ICartService cartService, IUserService userService, IAuthService authService, IStoreCatalogueService storeCatalogueService)
+        public StoreController(ICartService cartService, IUserService userService, IAuthService authService, IStoreCatalogueService storeCatalogueService, IOrderService orderservice)
         {
             _userService = userService;
             _authService = authService;
             _cartService = cartService;
             _storeCatalogueService = storeCatalogueService;
+            _orderService = orderservice;
         }
        
         [Authorize]
@@ -157,5 +162,32 @@ namespace HealthyFoodWeb.Controllers
             _storeCatalogueService.UpdateItemManufacturer(viewModel.Id, viewModel.Manufacturer);
             return RedirectToAction("storePageCatalogue");
         }
+
+
+        [HttpGet]
+        public IActionResult Ordering()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Ordering(OrderViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+            _orderService.CreateOrder(viewModel);
+            return RedirectToAction("OrderIsDone");
+        }
+        public IActionResult OrderIsDone ()
+        {
+            return View();
+        }
+
+        //public IActionResult OrderList()
+        //{
+        //    return View();
+        //}
     }
 }

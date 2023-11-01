@@ -13,6 +13,8 @@ namespace Data.Sql
         
         public DbSet<StoreItem> StoreItems { get; set; }
 
+        public DbSet<Order> Orders { get; set; }
+
         public WebContext() { }
 
         public WebContext(DbContextOptions<WebContext> options)
@@ -35,7 +37,11 @@ namespace Data.Sql
                 .HasMany(x => x.Users)
                 .WithMany(x => x.StoreItems);
 
-			base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Order>()
+                .HasMany(x => x.Products)
+                .WithOne(x => x.Order);
+
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

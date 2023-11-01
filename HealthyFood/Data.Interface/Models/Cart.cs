@@ -9,5 +9,6 @@
         public virtual User Customer { get; set; }
         public virtual List<CartTags> Tags { get; set; }
         public int Quantity { get => quantity; set => quantity = value; }
+        public virtual Order? Order { get; set; }
     }
 }
